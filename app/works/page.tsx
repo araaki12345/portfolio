@@ -32,13 +32,13 @@ export default function Works() {
     <div className="max-w-6xl mx-auto">
       {/* ヘッダーセクション */}
       <section className="text-center mb-12">
-        <div className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+        <div className="bg-blue-500 bg-clip-text text-transparent">
           <h1 className="text-4xl font-bold mb-4">成果物とレポート</h1>
         </div>
         <p className="text-xl text-gray-400">
           これまでに作成したレポートや成果物
         </p>
-        <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full mt-6"></div>
+        <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full mt-6"></div>
       </section>
 
       {/* 作品一覧 */}

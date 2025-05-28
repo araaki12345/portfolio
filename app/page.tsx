@@ -3,13 +3,13 @@ export default function Page() {
     <div className="max-w-4xl mx-auto">
       {/* ヒーローセクション */}
       <section className="text-center mb-16">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <div className="bg-blue-500 bg-clip-text text-transparent">
           <h1 className="text-5xl font-bold mb-4">諸岡成</h1>
         </div>
         <p className="text-xl text-gray-400 mb-6">
           静岡大学情報学部情報社会学科3年
         </p>
-        <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+        <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full"></div>
       </section>
 
       {/* 自己紹介セクション */}
@@ -31,7 +31,7 @@ export default function Page() {
       <section className="mb-12">
         <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-8 border border-gray-800 hover-lift">
           <h2 className="text-3xl font-semibold mb-6 text-white flex items-center">
-            <span className="w-2 h-8 bg-purple-500 rounded-full mr-4"></span>
+            <span className="w-2 h-8 bg-blue-500 rounded-full mr-4"></span>
             使用経験のある言語・技術
           </h2>
 
@@ -91,7 +91,7 @@ export default function Page() {
       <section>
         <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-8 border border-gray-800 hover-lift">
           <h2 className="text-3xl font-semibold mb-6 text-white flex items-center">
-            <span className="w-2 h-8 bg-green-500 rounded-full mr-4"></span>
+            <span className="w-2 h-8 bg-blue-500 rounded-full mr-4"></span>
             連絡先
           </h2>
 
