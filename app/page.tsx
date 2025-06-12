@@ -20,9 +20,8 @@ export default function Page() {
             自己紹介
           </h2>
           <p className="text-gray-300 leading-relaxed text-lg">
-            諸岡成です。静岡大学情報学部情報社会学科に所属する3年生です。主に安全保障やOSINT（Open
-            Source
-            Intelligence）をはじめとするサイバーセキュリティ分野に関心を持っています。
+            静岡大学情報学部情報社会学科に所属する3年生です。主に安全保障やOSINT（Open
+            Source Intelligence）をはじめとするサイバーセキュリティ分野に関心を持っています。
           </p>
         </div>
       </section>
@@ -47,6 +46,9 @@ export default function Page() {
                 </span>
                 <span className="inline-block bg-yellow-600/20 text-yellow-300 px-3 py-1 rounded-full text-sm">
                   Python
+                </span>
+                <span className="inline-block bg-gray-600/20 text-gray-300 px-3 py-1 rounded-full text-sm">
+                  Java
                 </span>
               </div>
             </div>
