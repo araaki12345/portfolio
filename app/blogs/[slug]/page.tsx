@@ -1,5 +1,5 @@
-import { getPostData, getAllPostIds } from '@/libs/posts';
-import { notFound } from 'next/navigation';
+import { getPostData, getAllPostIds } from "@/libs/posts";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const posts = getAllPostIds();
@@ -8,8 +8,16 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function BlogPost({ params }: PageProps) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
   if (!slug) {
     notFound();
   }
@@ -27,7 +35,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         />
       </article>
     );
-  } catch (error) {
+  } catch {
     notFound();
   }
-} 
+}
