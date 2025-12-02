@@ -3,20 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
-
-// 型定義
-export interface PostMatter {
-  title: string;
-  date: string;
-  excerpt: string;
-  slug: string;
-}
-export interface PostData extends PostMatter {
-  id: string;
-}
-export interface FullPostData extends PostData {
-  contentHtml: string;
-}
+import { PostMatter, PostData, FullPostData } from "@/types/blog";
 
 const postsDirectory = path.join(process.cwd(), "BlogMD");
 
