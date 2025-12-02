@@ -1,96 +1,8 @@
 import React from "react";
+import { worksData } from "@/data/works";
+import Badge from "@/components/common/Badge";
 
 export default function Works() {
-  const items = [
-    {
-      id: 1,
-      title: "SU-CRAFT",
-      type: "成果物",
-      description: "静大生向けに構築したMinecraftマルチプレイサーバー",
-      tech: ["Ubuntu Server 22.04", "Java", "bungeecord", "Paper"],
-      status: "停止中",
-      link: "https://x.com/craft_su185",
-    },
-    {
-      id: 2,
-      title: "認証Bot",
-      type: "成果物",
-      description: "SU-CRAFTのDiscordサーバーの認証Bot",
-      tech: ["typescript", "discord.js", "node.js"],
-      status: "停止中",
-      link: "https://github.com/araaki12345/SUMinecraft-discord",
-    },
-    {
-      id: 3,
-      title: "ラズパイ水温系",
-      type: "成果物",
-      description: "ラズパイで水温を測定し、簡易的にWeb上で表示するシステム",
-      tech: ["python", "flask", "html", "css", "javascript"],
-      status: "停止中(稲の種蒔き期間の際に使用)",
-    },
-    {
-      id: 4,
-      title: "Thank you 天竜",
-      type: "成果物",
-      description:
-        "オープンデータを活用したアイデアソンである「チャレンジ！！オープンガバナンス 2024」にて発表したWebサイト",
-      tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
-      status: "公開中(データベースやChatGPTのAPIは停止しています)",
-      link: "https://cog2024hamamatsu.vercel.app",
-    },
-    // CTF結果を追加
-    {
-      id: 5,
-      title: "DIVERS OSINT CTF 2025",
-      type: "CTF参加",
-      description: "OSINTをメインとしたCTF大会に参加し、前年よりも高い成績を収めることが出来ました",
-      tech: ["OSINT"],
-      rank: "16位",
-      totalTeams: 668,
-      percentage: "2.5%",
-      date: "2025年6月",
-      link: "https://ctftime.org/event/2751/",
-    },
-    {
-      id: 6,
-      title: "San Diego CTF 2025",
-      type: "CTF参加",
-      description: "一般CTFのOSINT問題を解きました",
-      tech: ["OSINT"],
-      rank: "24位",
-      totalTeams: 269,
-      percentage: "8.9%",
-      date: "2025年5月",
-      link: "https://ctftime.org/event/2785/",
-    },
-    {
-      id: 7,
-      title: "Crate-CTF 2024",
-      type: "CTF参加",
-      description:
-        "一般CTFのOSINT分野の問題を解き、全問完答しました。",
-      tech: ["OSINT"],
-      rank: "13位",
-      totalTeams: 227,
-      percentage: "5.7%",
-      date: "2024年11月",
-      link: "https://ctftime.org/event/2489/",
-    },
-    {
-      id: 8,
-      title: "DIVERS OSINT CTF 2024",
-      type: "CTF参加",
-      description:
-        "初めてCTFに出場しました",
-      tech: ["OSINT"],
-      rank: "26位",
-      totalTeams: 453,
-      percentage: "5.7%",
-      date: "2024年6月",
-      link: "https://ctftime.org/event/2365/",
-    },
-  ];
-
   const getStatusColor = (status: string | undefined) => {
     if (status && (status.includes("停止中") || status === "完了")) {
       return {
@@ -108,20 +20,6 @@ export default function Works() {
     return null;
   };
 
-  const getTypeColor = (type: string) => {
-    if (type === "CTF参加") {
-      return {
-        bg: "bg-purple-600/20",
-        text: "text-purple-300",
-      };
-    } else {
-      return {
-        bg: "bg-blue-600/20",
-        text: "text-blue-300",
-      };
-    }
-  };
-
   return (
     <div className="max-w-6xl mx-auto">
       {/* ヘッダーセクション */}
@@ -137,24 +35,23 @@ export default function Works() {
 
       {/* 作品一覧 */}
       <section className="grid gap-8">
-        {items.map((item) => {
-          const typeColor = getTypeColor(item.type);
-
+        {worksData.map((item) => {
           return (
-            <div
+            <article
               key={item.id}
               className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-8 border border-gray-800 hover-lift"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
                 <div className="flex-1">
                   <div className="flex items-center mb-3">
-                    {/* CTF参加以外の場合のみステータス表示 */}
-                    {item.type !== "CTF参加" && (
+                    {/* 成果物の場合、ステータス表示 */}
+                    {item.type === "成果物" && (
                       <>
                         <span
                           className={`inline-block w-3 h-3 ${
                             getStatusColor(item.status)?.bg
                           } rounded-full mr-3`}
+                          aria-hidden="true"
                         ></span>
                         <span
                           className={`text-sm ${
@@ -167,11 +64,17 @@ export default function Works() {
                         </span>
                       </>
                     )}
-                    {/* CTF結果の場合、順位情報を表示 */}
+                    {/* CTF参加の場合、順位情報を表示 */}
                     {item.type === "CTF参加" && (
-                      <span className="text-sm bg-yellow-600/20 text-yellow-300 px-3 py-1 rounded-full font-medium">
+                      <Badge variant="yellow" className="font-medium">
                         {item.rank}/{item.totalTeams}チーム ({item.percentage})
-                      </span>
+                      </Badge>
+                    )}
+                    {/* ハッカソン参加の場合、受賞情報を表示 */}
+                    {item.type === "ハッカソン参加" && item.award && (
+                      <Badge variant="green" className="font-medium">
+                        🏆 {item.award}
+                      </Badge>
                     )}
                   </div>
 
@@ -183,11 +86,11 @@ export default function Works() {
                     {item.description}
                   </p>
 
-                  {/* CTF参加の場合、参加時期を表示 */}
-                  {item.type === "CTF参加" && (
+                  {/* CTF参加またはハッカソン参加の場合、参加時期を表示 */}
+                  {(item.type === "CTF参加" || item.type === "ハッカソン参加") && (
                     <div className="mb-4">
                       <span className="text-sm text-gray-400">
-                        参加時期:{" "}
+                        {item.type === "CTF参加" ? "参加時期" : "開催時期"}:{" "}
                         <span className="text-white">{item.date}</span>
                       </span>
                     </div>
@@ -195,30 +98,30 @@ export default function Works() {
                 </div>
 
                 <div className="text-right">
-                  <span
-                    className={`inline-block ${typeColor.bg} ${typeColor.text} px-4 py-2 rounded-full text-sm font-medium`}
-                  >
+                  <Badge variant={
+                    item.type === "成果物" ? "blue" :
+                    item.type === "CTF参加" ? "purple" : "orange"
+                  } className="px-4 py-2 font-medium">
                     {item.type}
-                  </span>
+                  </Badge>
                 </div>
               </div>
 
               {/* 使用技術 */}
-              <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">
-                  {item.type === "CTF参加" ? "カテゴリ" : "使用技術"}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {item.tech.map((tech, index) => (
-                    <span
-                      key={index}
-                      className="bg-gray-800/50 text-gray-300 px-3 py-1 rounded-md text-sm border border-gray-700"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+              {item.tech && item.tech.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">
+                    {item.type === "CTF参加" ? "カテゴリ" : "使用技術"}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {item.tech.map((tech, index) => (
+                      <Badge key={index} variant="default">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* アクションボタン */}
               <div className="flex space-x-4">
@@ -234,6 +137,7 @@ export default function Works() {
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-label="外部リンクアイコン"
                     >
                       <path
                         strokeLinecap="round"
@@ -242,11 +146,11 @@ export default function Works() {
                         d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                       />
                     </svg>
-                    {"詳細"}
+                    <span>詳細</span>
                   </a>
                 )}
               </div>
-            </div>
+            </article>
           );
         })}
       </section>
