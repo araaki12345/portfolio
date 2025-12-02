@@ -20,9 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className={`${inter.variable} ${notoSansJP.variable}`}>
-      <body className="bg-black text-gray-100 font-jp gradient-bg min-h-screen">
+      <body className="bg-gray-50 text-gray-900 font-jp min-h-screen">
         <Header />
-        <main className="container mx-auto px-6 py-12 min-h-screen">
+        <main className="container mx-auto px-6 py-16 min-h-screen">
           {children}
         </main>
         <Footer />

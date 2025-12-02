@@ -7,19 +7,16 @@ export default function Page() {
   return (
     <div className="max-w-4xl mx-auto">
       {/* ヒーローセクション */}
-      <section className="text-center mb-16">
-        <div className="bg-blue-500 bg-clip-text text-transparent">
-          <h1 className="text-5xl font-bold mb-4">{profileData.name}</h1>
-        </div>
-        <p className="text-xl text-gray-400 mb-6">{profileData.title}</p>
-        <div className="w-24 h-1 bg-blue-500 mx-auto rounded-full"></div>
+      <section className="text-center mb-20">
+        <h1 className="text-5xl font-bold mb-4 text-gray-900">{profileData.name}</h1>
+        <p className="text-lg text-gray-600">{profileData.title}</p>
       </section>
 
       {/* 自己紹介セクション */}
       <section className="mb-12">
         <Card>
           <SectionTitle>自己紹介</SectionTitle>
-          <p className="text-gray-300 leading-relaxed text-lg">
+          <p className="text-gray-700 leading-relaxed">
             {profileData.description}
           </p>
         </Card>
@@ -31,9 +28,8 @@ export default function Page() {
           <SectionTitle>使用経験のある言語・技術</SectionTitle>
 
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-                <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+            <div>
+              <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase">
                 プログラミング言語
               </h3>
               <div className="space-y-2">
@@ -45,9 +41,8 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-                <span className="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+            <div>
+              <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase">
                 フレームワーク
               </h3>
               <div className="space-y-2">
@@ -59,9 +54,8 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-                <span className="w-3 h-3 bg-red-500 rounded-full mr-2"></span>
+            <div>
+              <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase">
                 OS
               </h3>
               <div className="space-y-2">
@@ -82,10 +76,10 @@ export default function Page() {
           <SectionTitle>連絡先</SectionTitle>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="flex items-center space-x-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700">
-              <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-blue-400"
+                  className="w-6 h-6 text-blue-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -100,15 +94,15 @@ export default function Page() {
                 </svg>
               </div>
               <div>
-                <p className="text-gray-400 text-sm">メール</p>
-                <p className="text-white">{contactData.email}</p>
+                <p className="text-sm text-gray-500">メール</p>
+                <p className="text-gray-900 font-medium">{contactData.email}</p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 p-4 bg-gray-800/30 rounded-lg border border-gray-700">
-              <div className="w-12 h-12 bg-gray-600/20 rounded-lg flex items-center justify-center">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-gray-400"
+                  className="w-6 h-6 text-gray-700"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-label="GitHubアイコン"
@@ -117,12 +111,12 @@ export default function Page() {
                 </svg>
               </div>
               <div>
-                <p className="text-gray-400 text-sm">GitHub</p>
+                <p className="text-sm text-gray-500">GitHub</p>
                 <a
                   href={contactData.github.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white hover:text-blue-400 transition-colors duration-200"
+                  className="text-gray-900 font-medium hover:text-blue-600 transition-colors"
                 >
                   {contactData.github.username}
                 </a>
