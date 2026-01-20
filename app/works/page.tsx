@@ -1,134 +1,197 @@
 import { worksData } from "@/config/works";
 import Badge from "@/components/common/Badge";
-
-const getStatusColor = (status: string | undefined) => {
-  if (status && (status.includes("停止中") || status === "完了")) {
-    return "text-red-600 dark:text-red-400";
-  } else if (status) {
-    return "text-green-600 dark:text-green-400";
-  }
-  return "text-gray-600 dark:text-gray-400";
-};
+import ArrowLink from "@/components/common/ArrowLink";
 
 const getBadgeVariant = (type: string) => {
-  if (type === "成果物") return "blue";
-  if (type === "CTF参加") return "purple";
+  if (type === "成果物") return "emerald";
+  if (type === "CTF参加") return "violet";
   return "orange";
 };
 
+const getStatusBadgeVariant = (status: string | undefined) => {
+  if (status?.includes("停止中") || status === "完了") return "gray";
+  if (status?.includes("公開中")) return "emerald";
+  return "sky";
+};
+
 export default function Works() {
+  // タイプ別にグループ化
+  const ctfWorks = worksData.filter((w) => w.type === "CTF参加");
+  const hackathonWorks = worksData.filter((w) => w.type === "ハッカソン参加");
+  const productWorks = worksData.filter((w) => w.type === "成果物");
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* ヘッダーセクション */}
-      <section className="text-center mb-16">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">成果物と実績</h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          これまでに作成した成果物や各種イベントにおける実績をまとめています
+    <div className="max-w-4xl mx-auto">
+      {/* Header */}
+      <section className="animate-fade-in-up text-center mb-12 pt-8">
+        <h1 className="text-3xl font-bold text-[hsl(var(--foreground))] mb-3">
+          Works & Achievements
+        </h1>
+        <p className="text-[hsl(var(--muted-foreground))]">
+          成果物や各種イベントでの実績
         </p>
       </section>
 
-      {/* 作品一覧 */}
-      <section className="space-y-6">
-        {worksData.map((item) => {
-          return (
-            <article
-              key={item.id}
-              className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 hover-lift"
-            >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Badge variant={getBadgeVariant(item.type)}>
-                      {item.type}
+      <div className="animate-fade-in-up animation-delay-100 space-y-12">
+        {/* CTF Section */}
+        <section className="flex flex-col md:flex-row gap-6">
+          <div className="md:min-w-[140px]">
+            <h2 className="text-xl font-semibold text-[hsl(var(--foreground))]">CTF</h2>
+          </div>
+          <div className="flex-1">
+            <ul className="space-y-0">
+              {ctfWorks.map((item, index) => (
+                <li
+                  key={item.id}
+                  className="timeline-item pb-6"
+                >
+                  <div className="flex items-start gap-4">
+                    <time className="text-sm font-mono text-[hsl(var(--muted-foreground))] min-w-[80px] pt-0.5">
+                      {item.date}
+                    </time>
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-[hsl(var(--foreground))]">
+                          {item.title}
+                        </h3>
+                        <Badge variant="violet" size="sm">
+                          {item.rank}/{item.totalTeams}チーム
+                        </Badge>
+                        <span className="text-xs text-[hsl(var(--muted-foreground))]">
+                          ({item.percentage})
+                        </span>
+                      </div>
+                      <p className="text-sm text-[hsl(var(--muted-foreground))] mb-2">
+                        {item.description}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {item.tech?.map((tech) => (
+                          <Badge key={tech} variant="default" size="sm">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                      {item.link && (
+                        <div className="mt-3">
+                          <ArrowLink href={item.link} external>
+                            詳細を見る
+                          </ArrowLink>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Hackathon Section */}
+        <section className="flex flex-col md:flex-row gap-6">
+          <div className="md:min-w-[140px]">
+            <h2 className="text-xl font-semibold text-[hsl(var(--foreground))]">Hackathon</h2>
+          </div>
+          <div className="flex-1">
+            <ul className="space-y-0">
+              {hackathonWorks.map((item) => (
+                <li
+                  key={item.id}
+                  className="timeline-item pb-6"
+                >
+                  <div className="flex items-start gap-4">
+                    <time className="text-sm font-mono text-[hsl(var(--muted-foreground))] min-w-[80px] pt-0.5">
+                      {item.date}
+                    </time>
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-[hsl(var(--foreground))]">
+                          {item.title}
+                        </h3>
+                        {item.award && (
+                          <Badge variant="green" size="sm">
+                            🏆 {item.award}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-[hsl(var(--muted-foreground))] mb-2">
+                        {item.description}
+                      </p>
+                      {item.tech && item.tech.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {item.tech.map((tech) => (
+                            <Badge key={tech} variant="default" size="sm">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                      {item.link && (
+                        <div className="mt-3">
+                          <ArrowLink href={item.link} external>
+                            詳細を見る
+                          </ArrowLink>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Products Section */}
+        <section className="flex flex-col md:flex-row gap-6">
+          <div className="md:min-w-[140px]">
+            <h2 className="text-xl font-semibold text-[hsl(var(--foreground))]">Products</h2>
+          </div>
+          <div className="flex-1">
+            <div className="space-y-4">
+              {productWorks.map((item) => (
+                <article
+                  key={item.id}
+                  className="
+                    p-5 rounded-2xl
+                    border border-[hsl(var(--border))]
+                    bg-[hsl(var(--card))]
+                    hover:bg-[hsl(var(--muted)/0.5)]
+                    transition-colors
+                  "
+                >
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <h3 className="font-semibold text-[hsl(var(--foreground))]">
+                      {item.title}
+                    </h3>
+                    <Badge variant={getStatusBadgeVariant(item.status)} size="sm">
+                      {item.status}
                     </Badge>
-
-                    {/* 成果物の場合、ステータス表示 */}
-                    {item.type === "成果物" && (
-                      <span className={`text-sm font-medium ${getStatusColor(item.status)}`}>
-                        {item.status}
-                      </span>
-                    )}
-
-                    {/* CTF参加の場合、順位情報を表示 */}
-                    {item.type === "CTF参加" && (
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        {item.rank}/{item.totalTeams}チーム ({item.percentage})
-                      </span>
-                    )}
-
-                    {/* ハッカソン参加の場合、受賞情報を表示 */}
-                    {item.type === "ハッカソン参加" && item.award && (
-                      <Badge variant="green">
-                        🏆 {item.award}
-                      </Badge>
-                    )}
                   </div>
 
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                    {item.title}
-                  </h2>
-
-                  <p className="text-gray-700 dark:text-gray-300 mb-3">
+                  <p className="text-sm text-[hsl(var(--muted-foreground))] mb-3">
                     {item.description}
                   </p>
 
-                  {/* CTF参加またはハッカソン参加の場合、参加時期を表示 */}
-                  {(item.type === "CTF参加" || item.type === "ハッカソン参加") && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {item.type === "CTF参加" ? "参加時期" : "開催時期"}: {item.date}
-                    </p>
+                  {item.tech && item.tech.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {item.tech.map((tech) => (
+                        <Badge key={tech} variant="default" size="sm">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
                   )}
-                </div>
-              </div>
 
-              {/* 使用技術 */}
-              {item.tech && item.tech.length > 0 && (
-                <div className="mb-4">
-                  <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase">
-                    {item.type === "CTF参加" ? "カテゴリ" : "使用技術"}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {item.tech.map((tech) => (
-                      <Badge key={tech} variant="default">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* アクションボタン */}
-              {item.link && (
-                <div>
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium transition-colors"
-                  >
-                    詳細を見る
-                    <svg
-                      className="w-4 h-4 ml-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-label="外部リンクアイコン"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              )}
-            </article>
-          );
-        })}
-      </section>
+                  {item.link && (
+                    <ArrowLink href={item.link} external>
+                      詳細を見る
+                    </ArrowLink>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

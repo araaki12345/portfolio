@@ -1,28 +1,349 @@
 @import "tailwindcss";
 
-/* カスタムスクロールバー */
+/* ========================================
+   CSS Variables - Light/Dark Theme
+   ======================================== */
+:root {
+  /* Colors */
+  --background: 210 33% 99%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95%;
+  --muted-foreground: 240 3.8% 46%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --border: 240 5.9% 90%;
+  --ring: 217 91% 60%;
+  --radius: 0.75rem;
+
+  /* Highlight color - customizable per page */
+  --highlight-color: hsl(217 91% 60%);
+
+  /* Scrollbar */
+  --scrollbar-bg: transparent;
+  --scrollbar-thumb: #d4d4d4;
+  --scrollbar-thumb-hover: #a3a3a3;
+}
+
+.dark {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 6%;
+  --card-foreground: 0 0% 98%;
+  --primary: 217 91% 70%;
+  --primary-foreground: 240 10% 4%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 5.9% 10%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --border: 240 3.7% 20%;
+  --ring: 217 91% 70%;
+
+  --highlight-color: hsl(217 91% 70%);
+  --scrollbar-thumb: #4a4a4a;
+  --scrollbar-thumb-hover: #6a6a6a;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  opacity: 0;
+  animation: slide-in-right 0.4s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-slide-in-right {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   Scrollbar
+   ======================================== */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
-  border-radius: 3px;
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a3a3a3;
+  background: var(--scrollbar-thumb-hover);
 }
 
-/* シンプルなホバーエフェクト */
-.hover-lift {
-  transition: border-color 0.2s ease;
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
-.hover-lift:hover {
-  border-color: var(--accent);
+/* ========================================
+   Typography
+   ======================================== */
+.highlight {
+  color: var(--highlight-color) !important;
+}
+
+.highlight-bg {
+  background-color: var(--highlight-color) !important;
+}
+
+/* ========================================
+   Links
+   ======================================== */
+a {
+  transition: color 0.2s ease;
+}
+
+/* ========================================
+   Card Hover Effects
+   ======================================== */
+.card-hover {
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.card-hover:hover {
+  background-color: hsl(var(--muted));
+  border-color: hsl(var(--border));
+}
+
+/* ========================================
+   Arrow Animation (for links)
+   ======================================== */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.arrow-link .arrow-line {
+  transform: translateX(0.25rem) scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.arrow-link .arrow-head {
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.arrow-link:hover .arrow-line {
+  transform: translateX(0) scaleX(1);
+}
+
+.arrow-link:hover .arrow-head {
+  transform: translateX(0.25rem);
+}
+
+/* ========================================
+   Header Scroll Effects
+   ======================================== */
+.header-scrolled {
+  background-color: hsl(var(--card) / 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom-color: hsl(var(--border));
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.header-hidden {
+  transform: translateY(-100%);
+}
+
+/* ========================================
+   Prose Customization
+   ======================================== */
+.prose {
+  --tw-prose-body: hsl(var(--foreground));
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-links: hsl(var(--primary));
+  --tw-prose-bold: hsl(var(--foreground));
+  --tw-prose-code: hsl(var(--foreground));
+  --tw-prose-quotes: hsl(var(--muted-foreground));
+  --tw-prose-quote-borders: hsl(var(--border));
+  --tw-prose-hr: hsl(var(--border));
+}
+
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: hsl(var(--primary));
+}
+
+.prose code {
+  background-color: hsl(var(--muted));
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+.prose pre {
+  background-color: hsl(var(--muted));
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
+}
+
+.prose blockquote {
+  border-left: 3px solid hsl(var(--primary));
+  background-color: hsl(var(--muted) / 0.5);
+  padding: 1rem 1.5rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* ========================================
+   Timeline Styles
+   ======================================== */
+.timeline-item {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 2px solid hsl(var(--muted-foreground));
+  background-color: hsl(var(--background));
+  z-index: 1;
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 0.3125rem;
+  top: 1.5rem;
+  width: 2px;
+  height: calc(100% - 0.5rem);
+  background-color: hsl(var(--border));
+}
+
+.timeline-item:last-child::after {
+  display: none;
+}
+
+/* ========================================
+   Badge Pill Style
+   ======================================== */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid;
+  backdrop-filter: blur(4px);
+}
+
+/* ========================================
+   Glass Effect
+   ======================================== */
+.glass {
+  background-color: hsl(var(--card) / 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* ========================================
+   Focus Styles
+   ======================================== */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* ========================================
+   Selection
+   ======================================== */
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
 }

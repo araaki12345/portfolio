@@ -1,10 +1,18 @@
 interface SectionTitleProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-export default function SectionTitle({ children }: SectionTitleProps) {
+export default function SectionTitle({ children, className = "" }: SectionTitleProps) {
   return (
-    <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+    <h2
+      className={`
+        text-xl font-semibold
+        text-[hsl(var(--foreground))]
+        mb-4
+        ${className}
+      `}
+    >
       {children}
     </h2>
   );

@@ -3,12 +3,33 @@ import { ReactNode } from "react";
 interface CardProps {
   children: ReactNode;
   className?: string;
+  hover?: boolean;
+  padding?: "none" | "sm" | "md" | "lg";
 }
 
-export default function Card({ children, className = "" }: CardProps) {
+const paddingStyles = {
+  none: "",
+  sm: "p-4",
+  md: "p-6",
+  lg: "p-8",
+} as const;
+
+export default function Card({
+  children,
+  className = "",
+  hover = true,
+  padding = "lg",
+}: CardProps) {
   return (
     <div
-      className={`bg-white dark:bg-gray-800 rounded-lg p-8 border border-gray-200 dark:border-gray-700 hover-lift ${className}`}
+      className={`
+        bg-[hsl(var(--card))]
+        border border-[hsl(var(--border))]
+        rounded-2xl
+        ${paddingStyles[padding]}
+        ${hover ? "transition-all duration-200 hover:bg-[hsl(var(--muted)/0.5)] hover:border-[hsl(var(--border))]" : ""}
+        ${className}
+      `}
     >
       {children}
     </div>

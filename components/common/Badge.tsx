@@ -1,22 +1,50 @@
+import { ReactNode } from "react";
+
 interface BadgeProps {
-  children: React.ReactNode;
-  variant?: "default" | "blue" | "yellow" | "green" | "purple" | "orange" | "gray";
+  children: ReactNode;
+  variant?: "default" | "blue" | "yellow" | "green" | "purple" | "orange" | "gray" | "emerald" | "violet" | "sky";
+  size?: "sm" | "md";
+  icon?: ReactNode;
   className?: string;
 }
 
 const variantStyles = {
-  default: "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600",
-  blue: "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700",
-  yellow: "bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-700",
-  green: "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700",
-  purple: "bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-700",
-  orange: "bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-700",
-  gray: "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-600",
+  default: "border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.5)] text-[hsl(var(--muted-foreground))]",
+  blue: "border-blue-400/40 bg-blue-500/10 text-blue-600 dark:text-blue-400",
+  yellow: "border-yellow-400/40 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
+  green: "border-green-400/40 bg-green-500/10 text-green-600 dark:text-green-400",
+  purple: "border-purple-400/40 bg-purple-500/10 text-purple-600 dark:text-purple-400",
+  orange: "border-orange-400/40 bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  gray: "border-gray-400/40 bg-gray-500/10 text-gray-600 dark:text-gray-400",
+  emerald: "border-emerald-400/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  violet: "border-violet-400/40 bg-violet-500/10 text-violet-600 dark:text-violet-400",
+  sky: "border-sky-400/40 bg-sky-500/10 text-sky-600 dark:text-sky-400",
 } as const;
 
-export default function Badge({ children, variant = "default", className = "" }: BadgeProps) {
+const sizeStyles = {
+  sm: "px-2.5 py-0.5 text-xs",
+  md: "px-3 py-1 text-sm",
+} as const;
+
+export default function Badge({
+  children,
+  variant = "default",
+  size = "sm",
+  icon,
+  className = "",
+}: BadgeProps) {
   return (
-    <span className={`inline-block px-3 py-1 rounded-md text-sm font-medium ${variantStyles[variant]} ${className}`}>
+    <span
+      className={`
+        inline-flex items-center gap-1.5
+        rounded-full border font-medium
+        backdrop-blur-sm
+        ${variantStyles[variant]}
+        ${sizeStyles[size]}
+        ${className}
+      `}
+    >
+      {icon && <span className="flex-shrink-0">{icon}</span>}
       {children}
     </span>
   );
