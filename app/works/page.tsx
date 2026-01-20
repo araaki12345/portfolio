@@ -2,12 +2,6 @@ import { worksData } from "@/config/works";
 import Badge from "@/components/common/Badge";
 import ArrowLink from "@/components/common/ArrowLink";
 
-const getBadgeVariant = (type: string) => {
-  if (type === "成果物") return "emerald";
-  if (type === "CTF参加") return "violet";
-  return "orange";
-};
-
 const getStatusBadgeVariant = (status: string | undefined) => {
   if (status?.includes("停止中") || status === "完了") return "gray";
   if (status?.includes("公開中")) return "emerald";
@@ -40,7 +34,7 @@ export default function Works() {
           </div>
           <div className="flex-1">
             <ul className="space-y-0">
-              {ctfWorks.map((item, index) => (
+              {ctfWorks.map((item) => (
                 <li
                   key={item.id}
                   className="timeline-item pb-6"
