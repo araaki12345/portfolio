@@ -1,23 +1,29 @@
-import React from "react";
-import { worksData } from "@/data/works";
+import { worksData } from "@/config/works";
 import Badge from "@/components/common/Badge";
 
+const getStatusColor = (status: string | undefined) => {
+  if (status && (status.includes("停止中") || status === "完了")) {
+    return "text-red-600 dark:text-red-400";
+  } else if (status) {
+    return "text-green-600 dark:text-green-400";
+  }
+  return "text-gray-600 dark:text-gray-400";
+};
+
+const getBadgeVariant = (type: string) => {
+  if (type === "成果物") return "blue";
+  if (type === "CTF参加") return "purple";
+  return "orange";
+};
+
 export default function Works() {
-  const getStatusColor = (status: string | undefined) => {
-    if (status && (status.includes("停止中") || status === "完了")) {
-      return "text-red-600";
-    } else if (status) {
-      return "text-green-600";
-    }
-    return "text-gray-600";
-  };
 
   return (
     <div className="max-w-5xl mx-auto">
       {/* ヘッダーセクション */}
       <section className="text-center mb-16">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900">成果物と実績</h1>
-        <p className="text-gray-600">
+        <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">成果物と実績</h1>
+        <p className="text-gray-600 dark:text-gray-400">
           これまでに作成した成果物や各種イベントにおける実績をまとめています
         </p>
       </section>
@@ -28,15 +34,12 @@ export default function Works() {
           return (
             <article
               key={item.id}
-              className="bg-white rounded-lg p-6 border border-gray-200 hover-lift"
+              className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 hover-lift"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <Badge variant={
-                      item.type === "成果物" ? "blue" :
-                      item.type === "CTF参加" ? "purple" : "orange"
-                    }>
+                    <Badge variant={getBadgeVariant(item.type)}>
                       {item.type}
                     </Badge>
 
@@ -49,7 +52,7 @@ export default function Works() {
 
                     {/* CTF参加の場合、順位情報を表示 */}
                     {item.type === "CTF参加" && (
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
                         {item.rank}/{item.totalTeams}チーム ({item.percentage})
                       </span>
                     )}
@@ -62,17 +65,17 @@ export default function Works() {
                     )}
                   </div>
 
-                  <h2 className="text-xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                     {item.title}
                   </h2>
 
-                  <p className="text-gray-700 mb-3">
+                  <p className="text-gray-700 dark:text-gray-300 mb-3">
                     {item.description}
                   </p>
 
                   {/* CTF参加またはハッカソン参加の場合、参加時期を表示 */}
                   {(item.type === "CTF参加" || item.type === "ハッカソン参加") && (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       {item.type === "CTF参加" ? "参加時期" : "開催時期"}: {item.date}
                     </p>
                   )}
@@ -82,12 +85,12 @@ export default function Works() {
               {/* 使用技術 */}
               {item.tech && item.tech.length > 0 && (
                 <div className="mb-4">
-                  <h3 className="text-xs font-semibold text-gray-500 mb-2 uppercase">
+                  <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase">
                     {item.type === "CTF参加" ? "カテゴリ" : "使用技術"}
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {item.tech.map((tech, index) => (
-                      <Badge key={index} variant="default">
+                    {item.tech.map((tech) => (
+                      <Badge key={tech} variant="default">
                         {tech}
                       </Badge>
                     ))}
@@ -102,7 +105,7 @@ export default function Works() {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                    className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium transition-colors"
                   >
                     詳細を見る
                     <svg

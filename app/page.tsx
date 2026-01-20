@@ -1,22 +1,22 @@
 import Card from "@/components/common/Card";
 import SectionTitle from "@/components/common/SectionTitle";
 import Badge from "@/components/common/Badge";
-import { profileData, contactData, skillsData } from "@/data/profile";
+import { profileData, contactData, skillsData } from "@/config/profile";
 
 export default function Page() {
   return (
     <div className="max-w-4xl mx-auto">
       {/* ヒーローセクション */}
       <section className="text-center mb-20">
-        <h1 className="text-5xl font-bold mb-4 text-gray-900">{profileData.name}</h1>
-        <p className="text-lg text-gray-600">{profileData.title}</p>
+        <h1 className="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">{profileData.name}</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-400">{profileData.title}</p>
       </section>
 
       {/* 自己紹介セクション */}
       <section className="mb-12">
         <Card>
           <SectionTitle>自己紹介</SectionTitle>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
             {profileData.description}
           </p>
         </Card>
@@ -29,12 +29,12 @@ export default function Page() {
 
           <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">
                 プログラミング言語
               </h3>
               <div className="space-y-2">
                 {skillsData.languages.map((skill) => (
-                  <Badge key={skill.name} variant={skill.color} className="mr-2 mb-2">
+                  <Badge key={skill.name} variant={skill.color}>
                     {skill.name}
                   </Badge>
                 ))}
@@ -42,12 +42,12 @@ export default function Page() {
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">
                 フレームワーク
               </h3>
               <div className="space-y-2">
                 {skillsData.frameworks.map((skill) => (
-                  <Badge key={skill.name} variant={skill.color} className="mr-2 mb-2">
+                  <Badge key={skill.name} variant={skill.color}>
                     {skill.name}
                   </Badge>
                 ))}
@@ -55,12 +55,12 @@ export default function Page() {
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-gray-500 mb-3 uppercase">
+              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase">
                 OS
               </h3>
               <div className="space-y-2">
                 {skillsData.os.map((skill) => (
-                  <Badge key={skill.name} variant={skill.color} className="mr-2 mb-2">
+                  <Badge key={skill.name} variant={skill.color}>
                     {skill.name}
                   </Badge>
                 ))}
@@ -77,9 +77,9 @@ export default function Page() {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-blue-600 dark:text-blue-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -94,15 +94,15 @@ export default function Page() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm text-gray-500">メール</p>
-                <p className="text-gray-900 font-medium">{contactData.email}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">メール</p>
+                <p className="text-gray-900 dark:text-gray-100 font-medium">{contactData.email}</p>
               </div>
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-gray-700"
+                  className="w-6 h-6 text-gray-700 dark:text-gray-300"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-label="GitHubアイコン"
@@ -111,12 +111,12 @@ export default function Page() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm text-gray-500">GitHub</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">GitHub</p>
                 <a
                   href={contactData.github.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-900 font-medium hover:text-blue-600 transition-colors"
+                  className="text-gray-900 dark:text-gray-100 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   {contactData.github.username}
                 </a>

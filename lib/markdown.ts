@@ -5,7 +5,7 @@ import { remark } from "remark";
 import html from "remark-html";
 import { PostMatter, PostData, FullPostData } from "@/types/blog";
 
-const postsDirectory = path.join(process.cwd(), "BlogMD");
+const postsDirectory = path.join(process.cwd(), "content/blogs");
 
 // ブログ記事一覧用
 export function getSortedPostsData(): PostData[] {
